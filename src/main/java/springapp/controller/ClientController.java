@@ -112,7 +112,6 @@ public class ClientController {
      *                           some attributes to the list page
      * @return redirect path to the list clients page
      */
-     @PreAuthorize("hasAuthority('DELETE_CLIENT')")
 	 @GetMapping("/{id}/delete")
 	 public String deleteClient(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
          // NOTE to handle exceptions, we would wrap the following code in a try/catch
@@ -127,5 +126,4 @@ public class ClientController {
          // redirect to list clients path/page
          return "redirect:/clients";
     }
-
 }
