@@ -30,6 +30,6 @@ public class AppointmentController {
     @GetMapping
     public String getAppointments() {
     	// redirect to list clients path/page
-        return "redirect:/clients";
+    	return "appointments/listAppointments";
     }
 }
