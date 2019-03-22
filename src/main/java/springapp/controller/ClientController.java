@@ -75,6 +75,8 @@ public class ClientController {
 			// we get the list of pets, and send those as is since we dont need a command to carry changes to the pets
             // from this page
 			model.addAttribute("pets", clientService.getPets(client.getId()) );
+			
+			model.addAttribute("appointments", clientService.getAppointments(client.getId()) );
 		}
 		return "clients/editClient";
 	}
@@ -112,6 +114,7 @@ public class ClientController {
      *                           some attributes to the list page
      * @return redirect path to the list clients page
      */
+     @PreAuthorize("hasAuthority('DELETE_CLIENT')")
 	 @GetMapping("/{id}/delete")
 	 public String deleteClient(@PathVariable("id") String id, RedirectAttributes redirectAttributes) {
          // NOTE to handle exceptions, we would wrap the following code in a try/catch
@@ -126,4 +129,5 @@ public class ClientController {
          // redirect to list clients path/page
          return "redirect:/clients";
     }
+
 }

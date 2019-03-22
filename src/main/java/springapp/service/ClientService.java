@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import springapp.command.ClientCommand;
 import springapp.dao.ClientDao;
 import springapp.dao.PetDao;
+import springapp.dao.AppointmentDao;
+import springapp.domain.Appointment;
 import springapp.domain.Client;
 import springapp.domain.Pet;
 
@@ -22,6 +24,9 @@ public class ClientService {
 
 	@Autowired 
 	PetDao petDao;
+	
+	@Autowired
+	AppointmentDao appointmentDao;
 
 	public List<Client> getClients(){
 		return clientDao.list();
@@ -51,5 +56,10 @@ public class ClientService {
 	public List<Pet> getPets(int clientId) {
 	
 		return petDao.listForClient(clientId);
+	}
+	
+	public List<Appointment> getAppointments(int clientId) {
+		
+		return appointmentDao.listForClient(clientId);
 	}
 }

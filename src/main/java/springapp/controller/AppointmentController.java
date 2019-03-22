@@ -12,24 +12,108 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import springapp.command.ClientCommand;
+import springapp.command.AppointmentCommand;
 import springapp.domain.Client;
+import springapp.domain.Appointment;
 import springapp.service.ClientService;
+import springapp.service.AppointmentService;
 
-/**
- * This controller handles all client related pages
- *
- * Notice the @PreAuthorize annotations on the methods
- */
+
 @Controller
-@RequestMapping("/appointments") //notice that this path is set at the class level.
+@RequestMapping("/appointments")
 public class AppointmentController {
+	
+	private Logger logger = LoggerFactory.getLogger(AppointmentController.class);
 
-    @GetMapping
-    public String getAppointments() {
-    	// redirect to list clients path/page
-    	return "appointments/listAppointments";
+    @Autowired
+	AppointmentService appointmentService;
+
+	@Autowired
+	ClientService clientService;
+
+  
+	@PreAuthorize("hasAuthority('LIST_APPOINTMENTS')")
+	@GetMapping
+	public String listAppointments(Model model) {
+	  
+        List<Appointment> appointments = appointmentService.getAppointments();
+
+       
+		model.addAttribute("appointments", appointments);
+        return "appointments/listAppointments";
     }
+
+
+	@PreAuthorize("hasAuthority('GET_APPOINTMENT')")
+	@GetMapping("/{id}")
+	public String getAppointment(@PathVariable("id") String id,
+						 Model model,
+						 @RequestParam(name="clientId", required=false) Integer clientId,
+						 @RequestParam(name="saved", required = false) boolean saved) {
+
+
+		model.addAttribute("fromClientPage", clientId != null);
+        model.addAttribute("saved", saved);
+
+
+      
+		if(id.equals("new") && clientId == null) {
+			throw new IllegalArgumentException("Cannot add a new appointment without a clientid");
+		}
+
+		AppointmentCommand appointmentCommand;
+
+		if(id.equals("new")) {
+           
+			appointmentCommand = new AppointmentCommand(clientId);
+			
+		} else {
+            
+            Appointment appointment = appointmentService.getAppointment(id);
+          
+			appointmentCommand = new AppointmentCommand(appointment);
+		}
+
+		Client client = clientService.getClient(appointmentCommand.getClientId());
+
+		appointmentCommand.setClient(client);			
+
+		model.addAttribute("command", appointmentCommand);
+		return "appointments/editAppointment";
+	}
+
+
+	@PreAuthorize("hasAuthority('SAVE_APPOINTMENT')")
+	@PostMapping
+	 public String saveAppointment(AppointmentCommand command, RedirectAttributes redirectAttributes, boolean fromClientPage) {
+
+        Appointment appointment = appointmentService.saveAppointment(command);
+
+        redirectAttributes.addAttribute("saved", true);
+        if(fromClientPage) {
+            redirectAttributes.addAttribute("clientId", appointment.getClientId());
+        }
+        return "redirect:/appointments/"+appointment.getId();
+
+    }
+
+	@PreAuthorize("hasAuthority('DELETE_APPOINTMENT')")
+	@GetMapping("/{id}/delete")
+	public String deleteAppointment(@PathVariable("id") String id,
+							@RequestParam(name="clientId", required=false) Integer clientId,
+							RedirectAttributes redirectAttributes) {
+
+		appointmentService.deleteAppointment(id);
+
+		redirectAttributes.addFlashAttribute("deleted", true);
+
+		if(clientId != null){
+			return "redirect:/clients/"+clientId;
+		}
+		return "redirect:/appointments";
+
+	}
 }

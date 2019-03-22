@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<header th:replace="fragments/head.html :: head" >
+</header>
+<body>
+	<div id="container" class="content pure-g" >
+		<header th:replace="fragments/header.html :: header" >
+		</header>
+		<div id="mainBody" class="pure-u pure-g column">
+			<div id="content" class="pure-u-1">
+				<div class="pad right">
+					<button type="submit" form="theForm" class="pure-button"  value="Save">Save</button>
+					
+					<a class="pure-button"  data-th-if="${!fromClientPage}" data-th-href="@{/appointments}">Cancel</a>
+					<a class="pure-button"  data-th-if="${fromClientPage}" data-th-href="@{/clients/{c}(c=${command.client.id})}">Cancel</a>
+					<a class="pure-button" data-th-if="${command.id != null}" data-th-href="@{'/appointments/'+${command?.id}+'/delete'}">Delete</a>
+
+				</div>
+				<div class="pad">
+					<form class="pure-form pure-form-aligned" id="theForm" action="#" data-th-action="@{/appointments}" data-th-object="${command}" method="post">
+						<input type="hidden" data-th-field="*{id}"/>
+						<input type="hidden" data-th-field="*{clientId}"/>
+						<input type="hidden" id="fromClientPage" name="fromClientPage" data-th-value="${fromClientPage}"/>
+						
+					    <div data-th-if="${saved}" class="message-box-info">
+							Saved
+					    </div>
+
+						<div class="pure-control-group">
+				            <label>Client</label>
+				            <span data-th-text="${command.client.name}"> client </span>
+				        </div>
+				        
+						<div class="pure-control-group">
+				            <label>Id</label>
+				            <span data-th-if="${command.id == null}"> New </span>
+  				            <span data-th-if="${command.id != null}" data-th-text="*{id}"> New </span>				            
+				        </div>
+		
+				        <div class="pure-control-group">
+				            <label for="date">Date</label>
+				            <input id="date" name="date" type="date" data-th-field="*{date}">
+				        </div>
+				        
+				       <div class="pure-control-group">
+				            <label for="time">Time</label>
+				            <input id="time" name="time" type="time" data-th-field="*{time}">
+				        </div>
+				        
+				        
+				       
+				        
+					</form>
+					
+							
+				</div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>

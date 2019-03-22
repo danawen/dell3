@@ -8,26 +8,25 @@
 		</header>
 		<div id="mainBody" class="pure-u pure-g column">
 			<div id="content" class="pure-u-1">
-				<div class="pad right">
-					<a class="pure-button"  data-th-href="@{'/appointments/new'}">Add appointment</a>
-				</div>
 				<div class="pad">
 				    <div data-th-if="${deleted}" class="message-box-info">
 						Deleted successfully
 				    </div>
 					<table class="fullWidth pure-table pure-table-horizontal">
-						<!-- <thead>
+						<thead>
 							<tr>
-								<th>Id</th>
-								<th>Name</th>
+								<th>Appointment ID</th>
+								<th>Date</th>
+								<th>Time</th>
 							</tr>
 						</thead>
 						<tbody>	
 							<tr data-th-each="appointment : ${appointments}">
 								<td> <a data-th-href="@{/appointments/{id}(id=${appointment.id})}" data-th-text="${appointment.id}">...</a></td>
-								<td data-th-text="${client.name}">...</td>
+								<td data-th-text="${appointment.date}">...</td>
+								<td data-th-text="${appointment.time}">...</td>
 							</tr>
-						</tbody> -->
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -35,4 +34,3 @@
     </div>
 </body>
 </html>
-
