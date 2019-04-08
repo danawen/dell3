@@ -8146,6 +8146,10 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
   .mdl-layout--fixed-drawer>.mdl-layout__content {
     margin-left: 0;
   }
+
+  .mdl-layout__drawer-button {
+    color: white;
+  }
 }
 
 .mdl-navigation-title {
