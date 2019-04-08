@@ -1,72 +1,144 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u pure-g column">
-			<div id="content" class="pure-u-1">
-				<div class="pad right">
-					<button type="submit" form="theForm" class="pure-button"  value="Save">Save</button>
-					<a class="pure-button"  data-th-if="${fromClientPage}" data-th-href="@{/clients/{c}(c=${command.client.id})}">Cancel</a>
-					<a class="pure-button"  data-th-if="${!fromClientPage}" data-th-href="@{/pets}">Cancel</a>
-					
-					<a class="pure-button" data-th-if="${command.id != null}" data-th-href="@{'/pets/'+${command?.id}+'/delete'}">Delete</a>
+  <header th:replace="fragments/head.html :: head"></header>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+      <header th:replace="fragments/header.html :: header"></header>
+      <main class="mdl-layout__content">
+        <div id="mainBody" class="page-content list-clients">
+          <div class="page-content-header">
+            <h3 data-th-if="${command.id != null}">
+              Edit Pet
+              <span data-th-text="*{id}" style="color: #007DB8;font-weight: 500;"> New </span> for
+              Client
+              <span data-th-text="${command.client.name}" style="color: #007DB8;font-weight: 500;">
+                client
+              </span>
+            </h3>
+            <h3 data-th-if="${command.id == null}">New Pet</h3>
+            <div>
+              <button
+                type="submit"
+                form="theForm"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--success mdl-js-ripple-effect"
+                value="Save"
+              >
+                <i class="material-icons">save</i>
+                Save
+              </button>
 
-				</div>
-				<div class="pad">
-					<form class="pure-form pure-form-aligned" id="theForm" action="#" data-th-action="@{/pets}" data-th-object="${command}" method="post">
-						<input type="hidden" data-th-field="*{id}"/>
-						<input type="hidden" data-th-field="*{clientId}"/>
-						<input type="hidden" id="fromClientPage" name="fromClientPage" data-th-value="${fromClientPage}"/>
-						
-					    <div data-th-if="${saved}" class="message-box-info">
-							Saved
-					    </div>
+              <a
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+                data-th-if="${command.id != null}"
+                data-th-href="@{'/pets/'+${command?.id}+'/delete'}"
+              >
+                <i class="material-icons">remove</i>
+                Delete
+              </a>
 
-						<div class="pure-control-group">
-				            <label>Client</label>
-				            <span data-th-text="${command.client.name}"> client </span>
-				        </div>
-				        
-						<div class="pure-control-group">
-				            <label>Id</label>
-				            <span data-th-if="${command.id == null}"> New </span>
-  				            <span data-th-if="${command.id != null}" data-th-text="*{id}"> New </span>				            
-				        </div>
-		
-				        <div class="pure-control-group">
-				            <label for="name">Name</label>
-				            <input id="name" name="name" type="text" data-th-field="*{name}">
-				        </div>
+              <a
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--warn mdl-js-ripple-effect"
+                data-th-if="${fromClientPage}"
+                data-th-href="@{/clients/{c}(c=${command.client.id})}"
+              >
+                <i class="material-icons">close</i>
+                Cancel
+              </a>
 
-				        <div class="pure-control-group">
-				            <label>Gender</label>
-							<select data-th-field="*{gender}">
-							    <option data-th-value="''"></option>
-							    <option data-th-value="'Female'" data-th-text="Female"></option>
-							    <option data-th-value="'Male'" data-th-text="Male"></option>
-							</select>
-				        </div>
-						
-						
-				        <div class="pure-control-group">
-				            <label for="altered">Altered</label>
-				            <input id="altered" name="altered" type="checkbox" data-th-field="*{altered}">
-				        </div>
-				        
-					</form>
-					
-							
-				</div>
-			</div>
-		</div>
+              <a
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--warn mdl-js-ripple-effect"
+                data-th-if="${!fromClientPage}"
+                data-th-href="@{/pets}"
+              >
+                <i class="material-icons">close</i>
+                Cancel
+              </a>
+            </div>
+          </div>
+
+          <form
+            id="theForm"
+            class="mt-40"
+            action="#"
+            data-th-action="@{/pets}"
+            data-th-object="${command}"
+            method="post"
+          >
+            <input type="hidden" data-th-field="*{id}" />
+            <input type="hidden" data-th-field="*{clientId}" />
+            <input
+              type="hidden"
+              id="fromClientPage"
+              name="fromClientPage"
+              data-th-value="${fromClientPage}"
+            />
+            <div data-th-if="${saved}" class="message-box-info">
+              Saved
+            </div>
+
+            <div class="edit-form">
+              <!-- <div class="pure-control-group">
+              <label>Client</label>
+              <span data-th-text="${command.client.name}"> client </span>
+            </div> -->
+
+              <!-- <div class="pure-control-group">
+              <label>Id</label>
+              <span data-th-if="${command.id == null}"> New </span>
+              <span data-th-if="${command.id != null}" data-th-text="*{id}"> New </span>
+            </div> -->
+
+              <div
+                style="flex-grow: 6"
+                class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mr-20"
+              >
+                <input
+                  data-th-field="*{name}"
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="name"
+                  name="name"
+                />
+                <label class="mdl-textfield__label" for="name">Name</label>
+              </div>
+
+              <div
+                style="flex-grow: 3"
+                class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mr-40"
+              >
+                <select
+                  data-th-field="*{gender}"
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="gender"
+                  name="gender"
+                >
+                  <option data-th-value="''"></option>
+                  <option data-th-value="'Female'" data-th-text="Female"></option>
+                  <option data-th-value="'Male'" data-th-text="Male"></option>
+                </select>
+                <label class="mdl-textfield__label" for="gender">Gender</label>
+              </div>
+
+              <div
+                style="flex-grow: 1"
+                class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label "
+              >
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="altered">
+                  <span class="mdl-switch__label">Altered</span>
+                  <input
+                    type="checkbox"
+                    id="altered"
+                    name="altered"
+                    class="mdl-switch__input"
+                    data-th-field="*{altered}"
+                  />
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </main>
     </div>
-</body>
+  </body>
 </html>
-
-
-
-

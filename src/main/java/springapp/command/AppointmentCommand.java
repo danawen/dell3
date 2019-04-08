@@ -17,8 +17,9 @@ public class AppointmentCommand {
 	private String time;
 	private Integer clientId;
 	private Client client;
-	private DateTimeFormatter dateFormatter;
 	
+	public AppointmentCommand() {
+	}
 	
 	public AppointmentCommand(Integer clientId) {
 		this.clientId = clientId;
@@ -28,13 +29,9 @@ public class AppointmentCommand {
 		if (appointment != null) {
 			this.clientId = appointment.getClientId();
 			this.id = appointment.getId();
-			this.date = appointment.getDate().format(dateFormatter);
+			this.date = appointment.getDate();
 			this.time = appointment.getTime();
 		}
-	}
-	
-	public AppointmentCommand() {
-		dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 	}
 	
 	public Integer getId() {

@@ -1,30 +1,23 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u pure-g column">
-			<div id="content" class="pure-u-1">
-				<div class="pad">
-					Welcome to the spring app tutorial.
-					<br>
-					From this app, you should be able to:
-					<ul>
-						<li> Add client and edit their info </li>
-						<li> Add pets for a client </li>
-						<li> Update a client's or a pet's info</li>
-					</ul>
-									
-				</div>
-			</div>
-		</div>
+  <header th:replace="fragments/head.html :: head"></header>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+      <header th:replace="fragments/header.html :: header"></header>
+      <main class="mdl-layout__content">
+        <div id="mainBody" class="page-content">
+          <div class="pad">
+            Welcome to the spring app tutorial.
+            <br />
+            From this app, you should be able to:
+            <ul>
+              <li>Add client and edit their info</li>
+              <li>Add pets for a client</li>
+              <li>Update a client's or a pet's info</li>
+            </ul>
+          </div>
+        </div>
+      </main>
     </div>
-</body>
+  </body>
 </html>
-
-
-
-

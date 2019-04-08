@@ -1,127 +1,206 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u pure-g column">
-			<div id="content" class="pure-u-1">
-				<div class="pad right">
-<<<<<<< HEAD
-					<button type="submit" form="theForm" class="pure-button"  value="Save">Save</button>
-					<a class="pure-button" data-th-href="@{/clients}">Cancel</a>
-					<a class="pure-button" data-th-if="${command.id != null}" data-th-href="@{/clients/{c}/delete(c=${command?.id})}">Delete</a>
-					<a class="pure-button" data-th-if="${command.id != null}" data-th-href="@{/pets/new?clientId={c}(c=${command?.id})}">Add Pet</a>
-					<a class="pure-button" data-th-if="${command.id != null}" data-th-href="@{/appointments/new?clientId={c}(c=${command?.id})}">Add Appointment</a>
-					
-=======
-					<button type="submit" form="theForm" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"  value="Save">
-						<i class="material-icons">save</i>
-						Save
-					</button>
-					<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" data-th-href="@{/clients}">
-						<i class="material-icons">close</i>
-						Cancel
-					</a>
-					<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" data-th-if="${command.id != null}" data-th-href="@{/clients/{c}/delete(c=${command?.id})}">
-						<i class="material-icons">remove</i>
-						Delete
-					</a>
-					<a class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" data-th-if="${command.id != null}" data-th-href="@{/pets/new?clientId={c}(c=${command?.id})}">
-						<i class="material-icons">add</i>
-						Add Pet
-					</a>
+  <header th:replace="fragments/head.html :: head"></header>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+      <header th:replace="fragments/header.html :: header"></header>
+      <main class="mdl-layout__content">
+        <div id="mainBody" class="page-content list-clients">
+          <div class="page-content-header">
+            <h3 data-th-if="${command.id != null}">
+              Edit Client
+              <span data-th-text="*{id}" style="color: #007DB8;font-weight: 500;"> New </span>
+            </h3>
+            <h3 data-th-if="${command.id == null}">New Client</h3>
+            <div>
+              <button
+                type="submit"
+                form="theForm"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--success mdl-js-ripple-effect"
+                value="Save"
+              >
+                <i class="material-icons">save</i>
+                Save
+              </button>
+              <a
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+                data-th-if="${command.id != null}"
+                data-th-href="@{/clients/{c}/delete(c=${command?.id})}"
+              >
+                <i class="material-icons">remove</i>
+                Delete
+              </a>
+              <a
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--warn mdl-js-ripple-effect"
+                data-th-href="@{/clients}"
+              >
+                <i class="material-icons">close</i>
+                Cancel
+              </a>
+            </div>
+          </div>
 
->>>>>>> dc517b0cdd41742f303f506e0677c8a91e1397e3
-				</div>
-				<div class="pad">
-					<form class="pure-form pure-form-aligned" id="theForm" action="#" data-th-action="@{/clients}" data-th-object="${command}" method="post">
-						<input type="hidden" data-th-field="*{id}"/>
-					    <div data-th-if="${saved}" class="message-box-info">
-							Saved
-					    </div>
+          <form
+            class="mt-40"
+            id="theForm"
+            action="#"
+            data-th-action="@{/clients}"
+            data-th-object="${command}"
+            method="post"
+          >
+            <input type="hidden" data-th-field="*{id}" />
+            <div data-th-if="${saved}" class="message-box-info">
+              Saved
+            </div>
 
-						<div class="pure-control-group">
-				            <label>Id</label>
-				            <span data-th-if="${command.id == null}"> New </span>
-  				            <span name="id" data-th-if="${command.id != null}" data-th-text="*{id}"> New </span>
-				        </div>
-		
-				        <div class="pure-control-group">
-				            <label for="name">Name</label>
-				            <input id="name" name="name" type="text" data-th-field="*{name}">
-				        </div>
+            <div class="edit-form">
+              <div
+                style="flex-grow: 2"
+                class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mr-20"
+              >
+                <input
+                  data-th-field="*{name}"
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="name"
+                  name="name"
+                />
+                <label class="mdl-textfield__label" for="name">Name</label>
+              </div>
 
-				        <div class="pure-control-group">
-				            <label for="phone">Phone</label>
-				            <input id="phone" name="phone" type="text" data-th-field="*{phoneNumber}">
-				        </div>
-						
-						
-				        <div class="pure-control-group">
-				            <label for="address">Address</label>
-				            <textarea id="address" name="address" type="text" data-th-field="*{address}">
-				            </textarea>
-				        </div>
-				        <div class="pure-control-group" data-th-if="${command.id != null}">
-							<div data-th-if="${deleted}" class="message-box-info">
-								Deleted successfully
-							</div>
-							<table class="fullWidth pure-table pure-table-horizontal" >
-									<thead>
-										<tr>
-											<th>Pet ID</th>
-											<th>Name</th>
-											<th>Gender</th>
-										</tr>
-									</thead>
-									<tbody data-th-if="${pets.size() > 0}">	
-										<tr data-th-each="pet : ${pets}">
-											<td> <a data-th-href="@{/pets/{pid}?clientId={cid}(pid=${pet.id}, cid=${command.id})}" data-th-text="${pet.id}">...</a></td>
-											<td data-th-text="${pet.name}">...</td>
-											<td data-th-text="${pet.gender}">...</td>
-										</tr>
-									</tbody>
-									<tbody data-th-if="${pets.size() == 0}">
-										<tr>
-											<td  colspan=3>No associated pets</td>
-										</tr>
-									</tbody>
-								</table>
-								</br>
-								<table class="fullWidth pure-table pure-table-horizontal" >
-									<thead>
-										<tr>
-											<th>Appointment ID</th>
-											<th>Start Date</th>
-											<th>End Date</th>
-										</tr>
-									</thead>
-									<tbody data-th-if="${appointments.size() > 0}">	
-										<tr data-th-each="appointment : ${appointments}">
-											<td> <a data-th-href="@{/appointments/{aid}?clientId={cid}(aid=${appointment.id}, cid=${command.id})}" data-th-text="${appointment.id}">...</a></td>
-											<td data-th-text="${appointment.date}">...</td>
-											<td data-th-text="${appointment.time}">...</td>
-										</tr>
-									</tbody>
-									<tbody data-th-if="${appointments.size() == 0}">
-										<tr>
-											<td  colspan=3>No associated appointments</td>
-										</tr>
-									</tbody>
-								</table>
-				        	</div>
-				        </div>
-						
-						
-					</form>
-					
-							
-				</div>
-			</div>
-		</div>
+              <div
+                style="flex-grow: 1"
+                class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mr-20"
+              >
+                <input
+                  data-th-field="*{phoneNumber}"
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="phone"
+                  name="phone"
+                />
+                <label class="mdl-textfield__label" for="phone">Phone</label>
+              </div>
+
+              <div
+                style="flex-grow: 7"
+                class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+              >
+                <input
+                  data-th-field="*{address}"
+                  class="mdl-textfield__input"
+                  type="text"
+                  id="address"
+                  name="address"
+                />
+                <label class="mdl-textfield__label" for="address">Address</label>
+              </div>
+            </div>
+
+            <div data-th-if="${command.id != null}">
+              <div data-th-if="${deleted}" class="message-box-info">
+                Deleted successfully
+              </div>
+
+              <div class="mt-20 edit-table-group">
+                <a
+                  class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+                  data-th-if="${command.id != null}"
+                  data-th-href="@{/pets/new?clientId={c}(c=${command?.id})}"
+                >
+                  <i class="material-icons">add</i>
+                  Add Pet
+                </a>
+
+                <table class="mt-20 mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
+                  <thead>
+                    <tr>
+                      <th width="20%" style="text-align: center;">Pet ID</th>
+                      <th width="60%" class="mdl-data-table__cell--non-numeric">Name</th>
+                      <th width="20%" class="mdl-data-table__cell--non-numeric">Gender</th>
+                    </tr>
+                  </thead>
+                  <tbody data-th-if="${pets.size() > 0}">
+                    <tr data-th-each="pet : ${pets}">
+                      <td style="text-align: center;">
+                        <a
+                          data-th-href="@{/pets/{pid}?clientId={cid}(pid=${pet.id}, cid=${command.id})}"
+                          data-th-text="${pet.id}"
+                          >...</a
+                        >
+                      </td>
+                      <td class="mdl-data-table__cell--non-numeric" data-th-text="${pet.name}">
+                        ...
+                      </td>
+                      <td class="mdl-data-table__cell--non-numeric" data-th-text="${pet.gender}">
+                        ...
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody data-th-if="${pets.size() == 0}">
+                    <tr>
+                      <td class="mdl-data-table__cell--non-numeric">No associated pets</td>
+                      <td class="mdl-data-table__cell--non-numeric"></td>
+                      <td class="mdl-data-table__cell--non-numeric"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="mt-40 edit-table-group">
+                <a
+                  class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+                  data-th-if="${command.id != null}"
+                  data-th-href="@{/appointments/new?clientId={c}(c=${command?.id})}"
+                >
+                  <i class="material-icons">add</i>
+                  Add Appointment
+                </a>
+
+                <table class="mt-20 mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
+                  <thead>
+                    <tr>
+                      <th width="20%" style="text-align: center;">Appointment ID</th>
+                      <th width="60%" class="mdl-data-table__cell--non-numeric">Start Date</th>
+                      <th width="60%" class="mdl-data-table__cell--non-numeric">End Date</th>
+                    </tr>
+                  </thead>
+                  <tbody data-th-if="${appointments.size() > 0}">
+                    <tr data-th-each="appointment : ${appointments}">
+                      <td style="text-align: center;">
+                        <a
+                          data-th-href="@{/appointments/{aid}?clientId={cid}(aid=${appointment.id}, cid=${command.id})}"
+                          data-th-text="${appointment.id}"
+                          >...</a
+                        >
+                      </td>
+                      <td
+                        class="mdl-data-table__cell--non-numeric"
+                        data-th-text="${appointment.date}"
+                      >
+                        ...
+                      </td>
+                      <td
+                        class="mdl-data-table__cell--non-numeric"
+                        data-th-text="${appointment.time}"
+                      >
+                        ...
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody data-th-if="${appointments.size() == 0}">
+                    <tr>
+                      <td class="mdl-data-table__cell--non-numeric">No associated appointments</td>
+                      <td class="mdl-data-table__cell--non-numeric"></td>
+                      <td class="mdl-data-table__cell--non-numeric"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </main>
     </div>
-</body>
+  </body>
 </html>

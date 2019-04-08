@@ -28,20 +28,14 @@ import springapp.domain.Client;
 public class AppointmentDao {
 	
 	private Logger logger = LoggerFactory.getLogger(AppointmentDao.class);
-	private DateTimeFormatter dateFormatter;
 	
-	public AppointmentDao() {
-		dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-	}
-
 	RowMapper<Appointment> simpleAppointmentMapper = new RowMapper<Appointment>() {
 
 		@Override
 		public Appointment mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return new Appointment(rs.getInt("id"), LocalDate.parse(rs.getString("date"), dateFormatter), rs.getString("time"), rs.getInt("client_id"));
+			return new Appointment(rs.getInt("id"), rs.getString("date"), rs.getString("time"), rs.getInt("client_id"));
 		}
 	};
-	
 	
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -82,7 +76,6 @@ public class AppointmentDao {
 	
 	public Appointment save(Appointment appointment) {
 		Integer id = appointment.getId();
-		DateTimeFormatter dbDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		if(id == null) {
 			
 			KeyHolder holder = new GeneratedKeyHolder();
@@ -92,7 +85,7 @@ public class AppointmentDao {
 				@Override
 				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 					PreparedStatement statement = con.prepareStatement("INSERT INTO appointments(date, time, client_id) VALUES (?, ?, ?)");
-					statement.setString(1, appointment.getDate().format(dbDateFormatter));
+					statement.setString(1, appointment.getDate());
 					statement.setString(2, appointment.getTime());
 					statement.setInt(3, appointment.getClientId());
 					return statement;

@@ -15,14 +15,8 @@ import springapp.domain.Client;
 @Service
 public class AppointmentService {
 	
-	private DateTimeFormatter dateFormatter;
-	
 	@Autowired 
 	AppointmentDao appointmentDao;
-	
-	public AppointmentService() {
-		dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-	}
 	
 	public List<Appointment> getAppointments(){
 		return appointmentDao.list();
@@ -38,7 +32,7 @@ public class AppointmentService {
 	}
 	
 	public Appointment saveAppointment(AppointmentCommand command) {
-		Appointment newAppointment = new Appointment(command.getId(), LocalDate.parse(command.getDate(), dateFormatter), command.getTime(), command.getClientId());
+		Appointment newAppointment = new Appointment(command.getId(), command.getDate(), command.getTime(), command.getClientId());
 		return appointmentDao.save(newAppointment);
 	}
 }

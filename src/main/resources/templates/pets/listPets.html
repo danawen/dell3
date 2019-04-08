@@ -1,37 +1,41 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u pure-g column">
-			<div id="content" class="pure-u-1">
-				<div class="pad">
-				    <div data-th-if="${deleted}" class="message-box-info">
-						Deleted successfully
-				    </div>
-					<table class="fullWidth pure-table pure-table-horizontal">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Name</th>
-								<th>Gender</th>
-							</tr>
-						</thead>
-						<tbody>	
-							<tr data-th-each="pet : ${pets}">
-								<td> <a data-th-href="@{/pets/{id}(id=${pet.id})}" data-th-text="${pet.id}">...</a></td>
-								<td data-th-text="${pet.name}">...</td>
-								<td data-th-text="${pet.gender}">...</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+  <header th:replace="fragments/head.html :: head"></header>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+      <header th:replace="fragments/header.html :: header"></header>
+      <main class="mdl-layout__content">
+        <div id="mainBody" class="page-content list-pets">
+          <div class="page-content-header">
+            <h3>Pets</h3>
+          </div>
+          <div class="data-table fullWidth">
+            <div data-th-if="${deleted}" class="message-box-info">
+              Deleted successfully
+            </div>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
+              <tr>
+                <th width="10%" style="text-align: center;">
+                  Id
+                </th>
+                <th width="80%" class="mdl-data-table__cell--non-numeric">
+                  Name
+                </th>
+                <th width="10%" class="mdl-data-table__cell--non-numeric">
+                  Gender
+                </th>
+              </tr>
+              <tr data-th-each="pet : ${pets}">
+                <td style="text-align: center;">
+                  <a data-th-href="@{/pets/{id}(id=${pet.id})}" data-th-text="${pet.id}">...</a>
+                </td>
+                <td data-th-text="${pet.name}" class="mdl-data-table__cell--non-numeric">...</td>
+                <td data-th-text="${pet.gender}" class="mdl-data-table__cell--non-numeric">...</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </main>
     </div>
-</body>
+  </body>
 </html>
-

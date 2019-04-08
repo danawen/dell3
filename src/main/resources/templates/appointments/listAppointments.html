@@ -1,45 +1,49 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u pure-g column">
-			<div id="content" class="pure-u-1">
-<<<<<<< HEAD
-=======
-				<div class="pad right">
-					<a class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"  data-th-href="@{'/appointments/new'}">
-						<i class="material-icons">add</i>
-						Add appointment
-					</a>
-				</div>
->>>>>>> dc517b0cdd41742f303f506e0677c8a91e1397e3
-				<div class="pad">
-				    <div data-th-if="${deleted}" class="message-box-info">
-						Deleted successfully
-				    </div>
-					<table class="fullWidth pure-table pure-table-horizontal">
-						<thead>
-							<tr>
-								<th>Appointment ID</th>
-								<th>Date</th>
-								<th>Time</th>
-							</tr>
-						</thead>
-						<tbody>	
-							<tr data-th-each="appointment : ${appointments}">
-								<td> <a data-th-href="@{/appointments/{id}(id=${appointment.id})}" data-th-text="${appointment.id}">...</a></td>
-								<td data-th-text="${appointment.date}">...</td>
-								<td data-th-text="${appointment.time}">...</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+  <header th:replace="fragments/head.html :: head"></header>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+      <header th:replace="fragments/header.html :: header"></header>
+      <main class="mdl-layout__content">
+        <div id="mainBody" class="page-content list-appointments">
+          <div class="page-content-header">
+            <h3>Appointments</h3>
+          </div>
+          <div class="data-table fullWidth">
+            <div data-th-if="${deleted}" class="message-box-info">
+              Deleted successfully
+            </div>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
+              <tr>
+                <th width="10%" style="text-align: center;">
+                  Id
+                </th>
+                <th width="40%" class="mdl-data-table__cell--non-numeric">
+                  Date
+                </th>
+                <th width="50%" class="mdl-data-table__cell--non-numeric">
+                  Time
+                </th>
+              </tr>
+              <tr data-th-each="appointment : ${appointments}">
+                <td style="text-align: center;">
+                  <a
+                    data-th-href="@{/appointments/{id}(id=${appointment.id})}"
+                    data-th-text="${appointment.id}"
+                    >...</a
+                  >
+                </td>
+                <td data-th-text="${appointment.date}" class="mdl-data-table__cell--non-numeric">
+                  ...
+                </td>
+                <td data-th-text="${appointment.time}" class="mdl-data-table__cell--non-numeric">
+                  ...
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </main>
     </div>
-</body>
+  </body>
 </html>

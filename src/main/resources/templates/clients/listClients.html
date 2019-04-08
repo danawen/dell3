@@ -1,41 +1,46 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u pure-g column">
-			<div id="content" class="pure-u-1">
-				<div class="pad right">
-					<a class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"  data-th-href="@{'/clients/new'}">
-						<i class="material-icons">add</i>
-						Add client
-					</a>
-				</div>
-				<div class="pad">
-				    <div data-th-if="${deleted}" class="message-box-info">
-						Deleted successfully
-				    </div>
-					<table class="fullWidth pure-table pure-table-horizontal">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Name</th>
-							</tr>
-						</thead>
-						<tbody>	
-							<tr data-th-each="client : ${clients}">
-								<td> <a data-th-href="@{/clients/{id}(id=${client.id})}" data-th-text="${client.id}">...</a></td>
-								<td data-th-text="${client.name}">...</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+  <header th:replace="fragments/head.html :: head"></header>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+      <header th:replace="fragments/header.html :: header"></header>
+      <main class="mdl-layout__content">
+        <div id="mainBody" class="page-content list-clients">
+          <div class="page-content-header">
+            <h3>Clients</h3>
+            <a
+              class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+              data-th-href="@{'/clients/new'}"
+            >
+              <i class="material-icons">add</i>
+              Add client
+            </a>
+          </div>
+          <div class="data-table fullWidth">
+            <div data-th-if="${deleted}" class="message-box-info">
+              Deleted successfully
+            </div>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
+              <tr>
+                <th width="20%" style="text-align: center;">
+                  Id
+                </th>
+                <th width="80%" class="mdl-data-table__cell--non-numeric">Name</th>
+              </tr>
+              <tr data-th-each="client : ${clients}">
+                <td style="text-align: center;">
+                  <a data-th-href="@{/clients/{id}(id=${client.id})}" data-th-text="${client.id}"
+                    >...</a
+                  >
+                </td>
+                <td data-th-text="${client.name}" class="mdl-data-table__cell--non-numeric">
+                  ...
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </main>
     </div>
-</body>
+  </body>
 </html>
-

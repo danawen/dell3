@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 public class Appointment {
 	private final Integer id;
-	private final LocalDate date;
+	private final String date;
 	private final String time;
 	private final Integer clientId;
 	
-	public Appointment(Integer id, LocalDate date, String time, Integer clientId ){
+	public Appointment(Integer id, String date, String time, Integer clientId ){
 		this.id = id;
 		this.date = date;
 		this.time = time;
@@ -19,7 +19,7 @@ public class Appointment {
 		return id;
 	}
 
-	public LocalDate getDate() {
+	public String getDate() {
 		return date;
 	}
 	
