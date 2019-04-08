@@ -49,9 +49,6 @@
             method="post"
           >
             <input type="hidden" data-th-field="*{id}" />
-            <div data-th-if="${saved}" class="message-box-info">
-              Saved
-            </div>
 
             <div class="edit-form">
               <div
@@ -202,5 +199,30 @@
         </div>
       </main>
     </div>
+    <div id="snack-saved" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    <script>
+      if (window.location.href.indexOf('saved=true') > -1) {
+        r(function() {
+          'use strict';
+
+          var snackbarContainer = document.querySelector('#snack-saved');
+
+          snackbarContainer.style.backgroundColor = '#4CAF50';
+
+          var data = {
+            message: 'Saved Successfully',
+            timeout: 9000
+          };
+          snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        });
+
+        function r(f) {
+          /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f();
+        }
+      }
+    </script>
   </body>
 </html>

@@ -72,22 +72,7 @@
               name="fromClientPage"
               data-th-value="${fromClientPage}"
             />
-            <div data-th-if="${saved}" class="message-box-info">
-              Saved
-            </div>
-
             <div class="edit-form">
-              <!-- <div class="pure-control-group">
-              <label>Client</label>
-              <span data-th-text="${command.client.name}"> client </span>
-            </div> -->
-
-              <!-- <div class="pure-control-group">
-              <label>Id</label>
-              <span data-th-if="${command.id == null}"> New </span>
-              <span data-th-if="${command.id != null}" data-th-text="*{id}"> New </span>
-            </div> -->
-
               <div
                 style="flex-grow: 6"
                 class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mr-20"
@@ -140,5 +125,30 @@
         </div>
       </main>
     </div>
+    <div id="snack-saved" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    <script>
+      if (window.location.href.indexOf('saved=true') > -1) {
+        r(function() {
+          'use strict';
+
+          var snackbarContainer = document.querySelector('#snack-saved');
+
+          snackbarContainer.style.backgroundColor = '#4CAF50';
+
+          var data = {
+            message: 'Saved Successfully',
+            timeout: 9000
+          };
+          snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        });
+
+        function r(f) {
+          /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f();
+        }
+      }
+    </script>
   </body>
 </html>

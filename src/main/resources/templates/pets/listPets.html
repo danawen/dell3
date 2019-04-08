@@ -10,9 +10,6 @@
             <h3>Pets</h3>
           </div>
           <div class="data-table fullWidth">
-            <div data-th-if="${deleted}" class="message-box-info">
-              Deleted successfully
-            </div>
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
               <tr>
                 <th width="10%" style="text-align: center;">
@@ -37,5 +34,28 @@
         </div>
       </main>
     </div>
+    <div id="snack-deleted" class="mdl-js-snackbar mdl-snackbar" data-th-if="${deleted}">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    <script>
+      r(function() {
+        'use strict';
+
+        var snackbarContainer = document.querySelector('#snack-deleted');
+
+        snackbarContainer.style.backgroundColor = 'rgb(66, 184, 221)';
+
+        var data = {
+          message: 'Deleted Successfully',
+          timeout: 9000
+        };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+      });
+
+      function r(f) {
+        /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f();
+      }
+    </script>
   </body>
 </html>
