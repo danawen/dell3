@@ -8142,6 +8142,12 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
   margin-left: 220px;
 }
 
+@media screen and (max-width:1024px) {
+  .mdl-layout--fixed-drawer>.mdl-layout__content {
+    margin-left: 0;
+  }
+}
+
 .mdl-navigation-title {
   margin: 30px 15px 0;
 }
@@ -8155,7 +8161,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
 
 .page-content {
   padding: 40px;
-  background-color: #ececec !important;
+  background-color: #fafafa !important;
 }
 
 .page-content-header {
@@ -8169,12 +8175,32 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
   color: #424242;
 }
 
+.home {
+  min-width: 100%;
+  min-height: 100%;
+  background-image: url(/css/background.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.home,
 .list-clients,
 .list-pets,
 .list-appointments {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.text {
+  padding: 40px;
+  background: rgba(0, 0, 0, .7);
+  filter: grayscale(1) contrast(3);
+  color: white;
+  width: calc(100% - 160px);
+  min-height: calc(100% - 160px);
+  position: absolute;
 }
 
 .data-table {
