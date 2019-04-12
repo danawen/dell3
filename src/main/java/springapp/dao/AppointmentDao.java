@@ -33,7 +33,7 @@ public class AppointmentDao {
 
 		@Override
 		public Appointment mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return new Appointment(rs.getInt("id"), rs.getString("date"), rs.getString("time"), rs.getInt("client_id"));
+			return new Appointment(rs.getInt("id"), rs.getString("start"), rs.getString("end"), rs.getString("title"), rs.getString("backgroundColor"), rs.getInt("client_id"));
 		}
 	};
 	
@@ -42,16 +42,15 @@ public class AppointmentDao {
     	
 	public List<Appointment> list(){
 		List<Appointment> queryResult = jdbcTemplate.query(
-				"SELECT id, date, time, client_id FROM appointments",
+				"SELECT * FROM appointments",
 				simpleAppointmentMapper);
-		
 		
 		return queryResult;
 	}
 	
 	public List<Appointment> listForClient(int clientId){
 		List<Appointment> queryResult = jdbcTemplate.query(
-				"SELECT id, date, time, client_id FROM appointments WHERE client_id = ?",
+				"SELECT * FROM appointments WHERE client_id = ?",
 				new Object[] {clientId},
 				simpleAppointmentMapper);
 		
@@ -61,7 +60,7 @@ public class AppointmentDao {
 	
 	public Appointment get(int id) {
 		List<Appointment> queryResult = jdbcTemplate.query(
-				"SELECT id, date, time, client_id FROM appointments WHERE id = ? LIMIT 1", 
+				"SELECT * FROM appointments WHERE id = ? LIMIT 1", 
 				new Object[] {id},
 				simpleAppointmentMapper);
 		
@@ -70,8 +69,6 @@ public class AppointmentDao {
 		}
 		
 		return queryResult.get(0);
-		
-		
 	}
 	
 	public Appointment save(Appointment appointment) {
@@ -84,30 +81,28 @@ public class AppointmentDao {
 				
 				@Override
 				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-					PreparedStatement statement = con.prepareStatement("INSERT INTO appointments(date, time, client_id) VALUES (?, ?, ?)");
-					statement.setString(1, appointment.getDate());
-					statement.setString(2, appointment.getTime());
-					statement.setInt(3, appointment.getClientId());
+					PreparedStatement statement = con.prepareStatement("INSERT INTO appointments(start, end, title, backgroundColor, client_id) VALUES (?, ?, ?, ?, ?)");
+					statement.setString(1, appointment.getStart());
+					statement.setString(2, appointment.getEnd());
+					statement.setString(3, appointment.getTitle());
+					statement.setString(4, appointment.getBackgroundColor());
+					statement.setInt(5, appointment.getClientId());
 					return statement;
-
 				}
 			}, holder);
 			
 			id = holder.getKey().intValue();
 			
 		} else {
-			
-			jdbcTemplate.update("UPDATE appointments SET date = ?, time = ? WHERE id = ?",
-					new Object[] {appointment.getDate(), appointment.getTime(), id});
+			jdbcTemplate.update("UPDATE appointments SET start = ?, end = ?, title = ?, backgroundColor = ? WHERE id = ?",
+					new Object[] {appointment.getStart(), appointment.getEnd(), appointment.getTitle(), appointment.getBackgroundColor(), id});
 		}
 		
 		return get(id);
 	}
 	
 	public void delete(int id) {
-		
 		jdbcTemplate.update("DELETE FROM appointments WHERE id = ?",
 				new Object[] {id});
-		
 	}
 }

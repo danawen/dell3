@@ -1,28 +1,182 @@
 <!DOCTYPE html>
 <html>
   <header th:replace="fragments/head.html :: head"></header>
-  <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
-      <header th:replace="fragments/header.html :: header"></header>
-      <main class="mdl-layout__content">
-        <div id="mainBody" class="page-content list-clients">
-          <div class="page-content-header">
-            <h3>Clients</h3>
-            <a
-              class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
-              data-th-href="@{'/clients/new'}"
-            >
-              <i class="material-icons">add</i>
-              Add client
-            </a>
+  <body class="animsition site-menubar-unfold" style="animation-duration: 800ms; opacity: 1;">
+    <nav
+      class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega"
+      role="navigation"
+    >
+      <div class="navbar-header">
+        <button
+          type="button"
+          class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
+          data-toggle="menubar"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="hamburger-bar"></span>
+        </button>
+        <button
+          type="button"
+          class="navbar-toggler collapsed"
+          data-target="#site-navbar-collapse"
+          data-toggle="collapse"
+        >
+          <i class="icon md-more" aria-hidden="true"></i>
+        </button>
+        <div
+          class="navbar-brand navbar-brand-center site-gridmenu-toggle"
+          data-toggle="gridmenu"
+        >
+          <img
+            class="navbar-brand-logo"
+            src="/images/dell_white.png"
+            title="Dell Vete Hospital"
+          />
+          <span class="navbar-brand-text hidden-xs-down"
+            >Veterinary Hospital</span>
+        </div>
+      </div>
+
+      <div class="navbar-container container-fluid">
+        <!-- Navbar Collapse -->
+        <div
+          class="collapse navbar-collapse navbar-collapse-toolbar"
+          id="site-navbar-collapse"
+        >
+          <!-- Navbar Toolbar -->
+          <ul class="nav navbar-toolbar">
+            <li class="nav-item hidden-float" id="toggleMenubar">
+              <a class="nav-link" data-toggle="menubar" href="#" role="button">
+                <i class="icon hamburger hamburger-arrow-left">
+                  <span class="sr-only">Toggle menubar</span>
+                  <span class="hamburger-bar"></span>
+                </i>
+              </a>
+            </li>
+            <li class="nav-item hidden-sm-down" id="toggleFullscreen">
+              <a
+                class="nav-link icon icon-fullscreen"
+                data-toggle="fullscreen"
+                href="#"
+                role="button"
+              >
+                <span class="sr-only">Toggle fullscreen</span>
+              </a>
+            </li>
+          </ul>
+          <!-- End Navbar Toolbar -->
+
+          <!-- Navbar Toolbar Right -->
+          <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+            <li class="nav-item">
+              <div
+                class="nav-link navbar-avatar"
+                data-toggle="dropdown"
+                href="#"
+                aria-expanded="false"
+                data-animation="scale-up"
+                role="button"
+              >
+                <span class="avatar avatar-online">
+                  <img src="/images/portraits/2.jpg" alt="..." />
+                  <i></i>
+                </span>
+                <span style="padding: 3px;display: inline-block;">Admin</span>
+              </a>
+            </li>
+          </ul>
+          <!-- End Navbar Toolbar Right -->
+        </div>
+        <!-- End Navbar Collapse -->
+      </div>
+    </nav>
+
+    <div class="site-menubar">
+      <div class="site-menubar-body">
+        <div>
+          <div>
+            <ul class="site-menu" data-plugin="menu">
+              <li class="site-menu-category">Menu</li>
+              <li class="site-menu-item">
+                <a class="animsition-link" data-th-href="@{'/home'}">
+                  <i class="site-menu-icon md-home" aria-hidden="true"></i>
+                  <span class="site-menu-title">Home</span>
+                </a>
+              </li>
+              <li class="site-menu-item active">
+                <a class="animsition-link" data-th-href="@{'/clients'}">
+                  <i class="site-menu-icon md-accounts" aria-hidden="true"></i>
+                  <span class="site-menu-title">Clients</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" data-th-href="@{'/pets'}">
+                  <i
+                    class="site-menu-icon material-icons"
+                    style="font-size: 14px;margin-bottom: 3px;"
+                    aria-hidden="true"
+                  >
+                    pets
+                  </i>
+                  <span class="site-menu-title">Pets</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" data-th-href="@{'/appointments'}">
+                  <i class="site-menu-icon md-calendar" aria-hidden="true"></i>
+                  <span class="site-menu-title">Appointments</span>
+                </a>
+              </li>
+            </ul>
           </div>
+        </div>
+      </div>
+
+      <div class="site-menubar-footer">
+        <a
+          data-th-href="@{'/logout'}"
+          class="fold-show"
+          data-placement="top"
+          data-toggle="tooltip"
+          data-original-title="Sign Out"
+        >
+          <span class="icon md-power" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="page" style="min-height: 100%">
+      <div class="page-header">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a data-th-href="@{'/home'}"
+              ><i class="md-home" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item active">Clients</li>
+        </ol>
+        <div class="page-content-header">
+          <h1 class="page-title">Clients</h1>
+          <a
+            class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+            data-th-href="@{'/clients/new'}"
+          >
+            <i class="material-icons">add</i>
+            Add client
+          </a>
+        </div>
+      </div>
+
+      <div class="page-content">
           <div class="data-table fullWidth">
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
               <tr>
-                <th width="20%" style="text-align: center;">
+                <th width="10%" style="text-align: center;">
                   Id
                 </th>
-                <th width="80%" class="mdl-data-table__cell--non-numeric">Name</th>
+                <th width="20%" class="mdl-data-table__cell--non-numeric">Name</th>
+                <th width="20%" class="mdl-data-table__cell--non-numeric">Phone Number</th>
+                <th width="50%" class="mdl-data-table__cell--non-numeric">Address</th>
               </tr>
               <tr data-th-each="client : ${clients}">
                 <td style="text-align: center;">
@@ -33,12 +187,18 @@
                 <td data-th-text="${client.name}" class="mdl-data-table__cell--non-numeric">
                   ...
                 </td>
+                <td data-th-text="${client.phoneNumber}" class="mdl-data-table__cell--non-numeric">
+                  ...
+                </td>
+                <td data-th-text="${client.address}" class="mdl-data-table__cell--non-numeric">
+                  ...
+                </td>
               </tr>
             </table>
           </div>
-        </div>
-      </main>
+      </div>
     </div>
+
     <div id="snack-deleted" class="mdl-js-snackbar mdl-snackbar" data-th-if="${deleted}">
       <div class="mdl-snackbar__text"></div>
       <button class="mdl-snackbar__action" type="button"></button>
@@ -61,6 +221,69 @@
       function r(f) {
         /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f();
       }
+    </script>
+    <!-- Core  -->
+    <script src="/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    <script src="/vendor/jquery/jquery.js"></script>
+    <script src="/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="/vendor/bootstrap/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/3.5.2/js/jquery.animsition.min.js"></script>
+    <script src="/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+    <script src="/vendor/waves/waves.js"></script>
+
+    <!-- Plugins -->
+    <script src="/vendor/switchery/switchery.js"></script>
+    <script src="/vendor/intro-js/intro.js"></script>
+    <script src="/vendor/screenfull/screenfull.js"></script>
+    <script src="/vendor/slidepanel/jquery-slidePanel.js"></script>
+    <script src="/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/vendor/moment/moment.min.js"></script>
+    <script src="/vendor/fullcalendar/fullcalendar.js"></script>
+    <script src="/vendor/jquery-selective/jquery-selective.js"></script>
+    <script src="/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="/vendor/bootstrap-touchspin/bootstrap-touchspin.min.js"></script>
+    <script src="/vendor/bootbox/bootbox.js"></script>
+
+    <!-- Scripts -->
+    <script src="/js/Component.js"></script>
+    <script src="/js/Plugin.js"></script>
+    <script src="/js/Base.js"></script>
+    <script src="/js/Config.js"></script>
+    <script src="/js/Section/Menubar.js"></script>
+    <script src="/js/Section/GridMenu.js"></script>
+    <script src="/js/Section/Sidebar.js"></script>
+    <script src="/js/Section/PageAside.js"></script>
+    <script src="/js/Plugin/menu.js"></script>
+    <script src="/js/config/colors.js"></script>
+    <script src="/js/config/tour.js"></script>
+    <script>
+      Config.set('assets', '');
+    </script>
+
+    <!-- Page -->
+    <script src="/js/Site.js"></script>
+    <script src="/js/Plugin/asscrollable.js"></script>
+    <script src="/js/Plugin/slidepanel.js"></script>
+    <script src="/js/Plugin/switchery.js"></script>
+    <script src="/js/Plugin/bootstrap-touchspin.js"></script>
+    <script src="/js/Plugin/bootstrap-datepicker.js"></script>
+    <script src="/js/Plugin/material.js"></script>
+    <script src="/js/Plugin/action-btn.js"></script>
+    <script src="/js/Plugin/editlist.js"></script>
+    <script src="/js/Plugin/bootbox.js"></script>
+    <script>
+      (function(document, window, $) {
+        'use strict';
+
+        var Site = window.Site;
+        $(document).ready(function() {
+          Site.run();
+          $(".loader-overlay").remove();
+        });
+      })(document, window, jQuery);
     </script>
   </body>
 </html>

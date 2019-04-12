@@ -1,49 +1,594 @@
 <!DOCTYPE html>
 <html>
   <header th:replace="fragments/head.html :: head"></header>
-  <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
-      <header th:replace="fragments/header.html :: header"></header>
-      <main class="mdl-layout__content">
-        <div id="mainBody" class="page-content list-appointments">
-          <div class="page-content-header">
-            <h3>Appointments</h3>
-          </div>
-          <div class="data-table fullWidth">
-            <div data-th-if="${deleted}" class="message-box-info">
-              Deleted successfully
-            </div>
-            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp fullWidth">
-              <tr>
-                <th width="10%" style="text-align: center;">
-                  Id
-                </th>
-                <th width="40%" class="mdl-data-table__cell--non-numeric">
-                  Date
-                </th>
-                <th width="50%" class="mdl-data-table__cell--non-numeric">
-                  Time
-                </th>
-              </tr>
-              <tr data-th-each="appointment : ${appointments}">
-                <td style="text-align: center;">
-                  <a
-                    data-th-href="@{/appointments/{id}(id=${appointment.id})}"
-                    data-th-text="${appointment.id}"
-                    >...</a
+  <body class="animsition app-calendar page-aside-left">
+    <nav
+      class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega"
+      role="navigation"
+    >
+      <div class="navbar-header">
+        <button
+          type="button"
+          class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
+          data-toggle="menubar"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <span class="hamburger-bar"></span>
+        </button>
+        <button
+          type="button"
+          class="navbar-toggler collapsed"
+          data-target="#site-navbar-collapse"
+          data-toggle="collapse"
+        >
+          <i class="icon md-more" aria-hidden="true"></i>
+        </button>
+        <div
+          class="navbar-brand navbar-brand-center site-gridmenu-toggle"
+          data-toggle="gridmenu"
+        >
+          <img
+            class="navbar-brand-logo"
+            src="/images/dell_white.png"
+            title="Dell Vet Hospital"
+          />
+          <span class="navbar-brand-text hidden-xs-down"
+            >Veterinary Hospital</span
+          >
+        </div>
+      </div>
+
+      <div class="navbar-container container-fluid">
+        <!-- Navbar Collapse -->
+        <div
+          class="collapse navbar-collapse navbar-collapse-toolbar"
+          id="site-navbar-collapse"
+        >
+          <!-- Navbar Toolbar -->
+          <ul class="nav navbar-toolbar">
+            <li class="nav-item hidden-float" id="toggleMenubar">
+              <a class="nav-link" data-toggle="menubar" href="#" role="button">
+                <i class="icon hamburger hamburger-arrow-left">
+                  <span class="sr-only">Toggle menubar</span>
+                  <span class="hamburger-bar"></span>
+                </i>
+              </a>
+            </li>
+            <li class="nav-item hidden-sm-down" id="toggleFullscreen">
+              <a
+                class="nav-link icon icon-fullscreen"
+                data-toggle="fullscreen"
+                href="#"
+                role="button"
+              >
+                <span class="sr-only">Toggle fullscreen</span>
+              </a>
+            </li>
+          </ul>
+          <!-- End Navbar Toolbar -->
+
+          <!-- Navbar Toolbar Right -->
+          <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+            <li class="nav-item">
+              <div
+                class="nav-link navbar-avatar"
+                data-toggle="dropdown"
+                href="#"
+                aria-expanded="false"
+                data-animation="scale-up"
+                role="button"
+              >
+                <span class="avatar avatar-online">
+                  <img src="/images/portraits/2.jpg" alt="..." />
+                  <i></i>
+                </span>
+                <span style="padding: 3px;display: inline-block;">Admin</span>
+              </a>
+            </li>
+          </ul>
+          <!-- End Navbar Toolbar Right -->
+        </div>
+        <!-- End Navbar Collapse -->
+      </div>
+    </nav>
+
+    <div class="site-menubar">
+      <div class="site-menubar-body">
+        <div>
+          <div>
+            <ul class="site-menu" data-plugin="menu">
+              <li class="site-menu-category">Menu</li>
+              <li class="site-menu-item">
+                <a class="animsition-link" data-th-href="@{'/home'}">
+                  <i class="site-menu-icon md-home" aria-hidden="true"></i>
+                  <span class="site-menu-title">Home</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" data-th-href="@{'/clients'}">
+                  <i class="site-menu-icon md-accounts" aria-hidden="true"></i>
+                  <span class="site-menu-title">Clients</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" data-th-href="@{'/pets'}">
+                  <i
+                    class="site-menu-icon material-icons"
+                    style="font-size: 14px;margin-bottom: 3px;"
+                    aria-hidden="true"
                   >
-                </td>
-                <td data-th-text="${appointment.date}" class="mdl-data-table__cell--non-numeric">
-                  ...
-                </td>
-                <td data-th-text="${appointment.time}" class="mdl-data-table__cell--non-numeric">
-                  ...
-                </td>
-              </tr>
-            </table>
+                    pets
+                  </i>
+                  <span class="site-menu-title">Pets</span>
+                </a>
+              </li>
+              <li class="site-menu-item active">
+                <a class="animsition-link" data-th-href="@{'/appointments'}">
+                  <i class="site-menu-icon md-calendar" aria-hidden="true"></i>
+                  <span class="site-menu-title">Appointments</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-      </main>
+      </div>
+
+      <div class="site-menubar-footer">
+        <a
+          data-th-href="@{'/logout'}"
+          class="fold-show"
+          data-placement="top"
+          data-toggle="tooltip"
+          data-original-title="Sign Out"
+        >
+          <span class="icon md-power" aria-hidden="true"></span>
+        </a>
+      </div>
     </div>
+
+    <div class="page">
+      <div class="page-header">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a data-th-href="@{'/home'}"
+              ><i class="md-home" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item active">Appointments</li>
+        </ol>
+        <h1 class="page-title">Appointments</h1>
+      </div>
+      <div class="page-content">
+        <div class="panel calendar-container">
+          <div id="calendar"></div>
+
+          <!--AddEvent Dialog -->
+          <div
+            class="modal fade"
+            id="addNewEvent"
+            aria-hidden="true"
+            aria-labelledby="addNewEvent"
+            role="dialog"
+            tabindex="-1"
+          >
+            <div class="modal-dialog modal-simple">
+              <form
+                class="modal-content form-horizontal"
+                action="#"
+                method="post"
+                role="form"
+              >
+                <div class="modal-header">
+                  <button
+                    type="button"
+                    class="close"
+                    aria-hidden="true"
+                    data-dismiss="modal"
+                  >
+                    ×
+                  </button>
+                  <h4 class="modal-title">New Appointment</h4>
+                </div>
+
+                <div class="modal-body">
+                  <div class="col-md-12">
+                    <div class="form-group form-material floating" data-plugin="formMaterial">
+                      <input
+                        class="form-control empty"
+                        id="newTitle"
+                        name="newTitle"
+                      />
+                      <label class="floating-label" for="newTitle">Title</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group form-material" data-plugin="formMaterial">
+                      <label for="newDate">Date</label>
+                      <input
+                        class="form-control empty"
+                        id="newDate"
+                        name="newDate"
+                        data-container="#addNewEvent"
+                        readonly
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group form-material floating" data-plugin="formMaterial">
+                      <input
+                        class="form-control empty"
+                        id="newTime"
+                        name="newTime"
+                      />
+                      <label class="floating-label" for="newTime">Time</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group row" id="newColor">
+                    <label class="form-control-label col-md-2">Color:</label>
+                    <div class="col-md-10">
+                      <ul class="color-selector">
+                        <li class="bg-blue-600">
+                          <input
+                            type="radio"
+                            data-color="blue|600"
+                            name="colorChosen"
+                            id="editColorChosen2"
+                          />
+                          <label for="editColorChosen2"></label>
+                        </li>
+                        <li class="bg-green-600">
+                          <input
+                            type="radio"
+                            data-color="green|600"
+                            name="colorChosen"
+                            id="editColorChosen3"
+                          />
+                          <label for="editColorChosen3"></label>
+                        </li>
+                        <li class="bg-cyan-600">
+                          <input
+                            type="radio"
+                            data-color="cyan|600"
+                            name="colorChosen"
+                            id="editColorChosen4"
+                          />
+                          <label for="editColorChosen4"></label>
+                        </li>
+                        <li class="bg-orange-600">
+                          <input
+                            type="radio"
+                            data-color="orange|600"
+                            name="colorChosen"
+                            id="editColorChosen5"
+                          />
+                          <label for="editColorChosen4"></label>
+                        </li>
+                        <li class="bg-red-600">
+                          <input
+                            type="radio"
+                            data-color="red|600"
+                            name="colorChosen"
+                            id="editColorChosen6"
+                          />
+                          <label for="editColorChosen6"></label>
+                        </li>
+                        <li class="bg-blue-grey-600">
+                          <input
+                            type="radio"
+                            data-color="blue-grey|600"
+                            name="colorChosen"
+                            id="editColorChosen7"
+                          />
+                          <label for="editColorChosen7"></label>
+                        </li>
+                        <li class="bg-purple-600">
+                          <input
+                            type="radio"
+                            data-color="purple|600"
+                            name="colorChosen"
+                            id="editColorChosen8"
+                          />
+                          <label for="editColorChosen8"></label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="eventPeople"
+                      >Client:</label
+                    >
+                    <div class="col-md-10">
+                      <select
+                        id="eventPeople"
+                        class="plugin-selective"
+                      ></select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <div class="form-actions">
+                    <button
+                      class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+                      data-dismiss="modal"
+                      type="button"
+                    >
+                      Add this Appointment
+                    </button>
+                    <a
+                      class="btn btn-sm btn-white btn-pure"
+                      data-dismiss="modal"
+                      href="javascript:void(0)"
+                      >Cancel</a
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- End AddEvent Dialog -->
+
+          <!-- Edit Dialog -->
+          <div
+            class="modal fade"
+            id="editNewEvent"
+            aria-hidden="true"
+            aria-labelledby="editNewEvent"
+            role="dialog"
+            tabindex="-1"
+            data-show="false"
+          >
+            <div class="modal-dialog modal-simple">
+              <form
+                class="modal-content form-horizontal"
+                action="#"
+                method="post"
+                role="form"
+              >
+                <div class="modal-header">
+                  <button
+                    type="button"
+                    class="close"
+                    aria-hidden="true"
+                    data-dismiss="modal"
+                  >
+                    ×
+                  </button>
+                  <h4 class="modal-title">Edit Appointment</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-12">
+                    <div class="form-group form-material" data-plugin="formMaterial">
+                      <label for="editEname">Title</label>
+                      <input
+                        class="form-control empty"
+                        id="editEname"
+                        name="editEname"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group form-material" data-plugin="formMaterial">
+                      <label for="editStarts">Date</label>
+                      <input
+                        class="form-control empty"
+                        id="editStarts"
+                        name="editStarts"
+                        data-container="#editNewEvent"
+                        data-plugin="datepicker"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group form-material" data-plugin="formMaterial">
+                      <label for="editTime">Time</label>
+                      <input
+                        class="form-control empty"
+                        id="editTime"
+                        name="editTime"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group row" id="editColor">
+                    <label class="form-control-label col-md-2">Color:</label>
+                    <div class="col-md-10">
+                      <ul class="color-selector">
+                        <li class="bg-blue-600">
+                          <input
+                            type="radio"
+                            data-color="blue|600"
+                            name="colorChosen"
+                            id="editColorChosen2"
+                          />
+                          <label for="editColorChosen2"></label>
+                        </li>
+                        <li class="bg-green-600">
+                          <input
+                            type="radio"
+                            data-color="green|600"
+                            name="colorChosen"
+                            id="editColorChosen3"
+                          />
+                          <label for="editColorChosen3"></label>
+                        </li>
+                        <li class="bg-cyan-600">
+                          <input
+                            type="radio"
+                            data-color="cyan|600"
+                            name="colorChosen"
+                            id="editColorChosen4"
+                          />
+                          <label for="editColorChosen4"></label>
+                        </li>
+                        <li class="bg-orange-600">
+                          <input
+                            type="radio"
+                            data-color="orange|600"
+                            name="colorChosen"
+                            id="editColorChosen5"
+                          />
+                          <label for="editColorChosen4"></label>
+                        </li>
+                        <li class="bg-red-600">
+                          <input
+                            type="radio"
+                            data-color="red|600"
+                            name="colorChosen"
+                            id="editColorChosen6"
+                          />
+                          <label for="editColorChosen6"></label>
+                        </li>
+                        <li class="bg-blue-grey-600">
+                          <input
+                            type="radio"
+                            data-color="blue-grey|600"
+                            name="colorChosen"
+                            id="editColorChosen7"
+                          />
+                          <label for="editColorChosen7"></label>
+                        </li>
+                        <li class="bg-purple-600">
+                          <input
+                            type="radio"
+                            data-color="purple|600"
+                            name="colorChosen"
+                            id="editColorChosen8"
+                          />
+                          <label for="editColorChosen8"></label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="editPeople"
+                      >Clients:</label
+                    >
+                    <div class="col-md-10">
+                      <select
+                        id="editPeople"
+                        multiple="multiple"
+                        class="plugin-selective"
+                      ></select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <div class="form-actions">
+                    <button
+                      class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+                      data-dismiss="modal"
+                      type="button"
+                    >
+                      Save
+                    </button>
+                    <button
+                      class="mdl-button mdl-button--colored mdl-button--raised mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+                      data-dismiss="modal"
+                      type="button"
+                      id="delete"
+                    >
+                      Delete
+                    </button>
+                    <a
+                      class="btn btn-sm btn-white btn-pure"
+                      data-dismiss="modal"
+                      href="javascript:void(0)"
+                      >Cancel</a
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- End EditEvent Dialog -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Core  -->
+    <script src="/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    <script src="/vendor/jquery/jquery.js"></script>
+    <script src="/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="/vendor/bootstrap/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/3.5.2/js/jquery.animsition.min.js"></script>
+    <script src="/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+    <script src="/vendor/waves/waves.js"></script>
+
+    <!-- Plugins -->
+    <script src="/vendor/switchery/switchery.js"></script>
+    <script src="/vendor/intro-js/intro.js"></script>
+    <script src="/vendor/screenfull/screenfull.js"></script>
+    <script src="/vendor/slidepanel/jquery-slidePanel.js"></script>
+    <script src="/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/vendor/moment/moment.min.js"></script>
+    <script src="/vendor/fullcalendar/fullcalendar.js"></script>
+    <script src="/vendor/jquery-selective/jquery-selective.js"></script>
+    <script src="/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="/vendor/bootstrap-touchspin/bootstrap-touchspin.min.js"></script>
+    <script src="/vendor/bootbox/bootbox.js"></script>
+
+    <!-- Scripts -->
+    <script src="/js/Component.js"></script>
+    <script src="/js/Plugin.js"></script>
+    <script src="/js/Base.js"></script>
+    <script src="/js/Config.js"></script>
+    <script src="/js/Section/Menubar.js"></script>
+    <script src="/js/Section/GridMenu.js"></script>
+    <script src="/js/Section/Sidebar.js"></script>
+    <script src="/js/Section/PageAside.js"></script>
+    <script src="/js/Plugin/menu.js"></script>
+    <script src="/js/config/colors.js"></script>
+    <script src="/js/config/tour.js"></script>
+    <script>
+      Config.set('assets', '');
+    </script>
+    <script type="text/javascript" th:inline="javascript">
+      /*<![CDATA[*/
+      var appointments = [[${appointments}]];
+      var clients = [[${clients}]];
+      var _csrf_token = /*[[${_csrf.token}]]*/ '';
+
+      var dragDate = '';
+      /*]]>*/
+    </script>
+
+    <!-- Page -->
+    <script src="/js/Site.js"></script>
+    <script src="/js/Plugin/asscrollable.js"></script>
+    <script src="/js/Plugin/slidepanel.js"></script>
+    <script src="/js/Plugin/switchery.js"></script>
+    <script src="/js/Plugin/bootstrap-touchspin.js"></script>
+    <script src="/js/Plugin/bootstrap-datepicker.js"></script>
+    <script src="/js/Plugin/material.js"></script>
+    <script src="/js/Plugin/action-btn.js"></script>
+    <script src="/js/Plugin/editlist.js"></script>
+    <script src="/js/Plugin/bootbox.js"></script>
+    <script src="/js/App/Calendar.js"></script>
+
+    <script src="/js/calendar.js"></script>
+
+    <script>
+      (function(document, window, $) {
+        'use strict';
+
+        var Site = window.Site;
+        $(document).ready(function() {
+          Site.run();
+          $(".loader-overlay").remove();
+        });
+      })(document, window, jQuery);
+    </script>
   </body>
 </html>

@@ -8,10 +8,16 @@
       data-th-fragment="header"
       class="mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50"
     >
-      <img class="mdl-navigation-title" src="/css/dell_vet.png" width="190" />
+      <img
+        class="mdl-navigation-title"
+        src="/images/dell_vet.png"
+        width="190"
+      />
       <nav class="mdl-navigation" sec:authorize="isAuthenticated()">
         <a class="mdl-navigation__link" data-th-href="@{'/home'}">
-          <i style="font-size: 16px;margin-bottom: 3px;" class="material-icons">home</i>
+          <i style="font-size: 16px;margin-bottom: 3px;" class="material-icons"
+            >home</i
+          >
           Home
         </a>
         <a class="mdl-navigation__link" data-th-href="@{'/clients'}">

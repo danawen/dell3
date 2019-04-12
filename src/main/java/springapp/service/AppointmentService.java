@@ -32,7 +32,7 @@ public class AppointmentService {
 	}
 	
 	public Appointment saveAppointment(AppointmentCommand command) {
-		Appointment newAppointment = new Appointment(command.getId(), command.getDate(), command.getTime(), command.getClientId());
+		Appointment newAppointment = new Appointment(command.getId(), command.getStart(), command.getEnd(), command.getTitle(), command.getBackgroundColor(), command.getClientId());
 		return appointmentDao.save(newAppointment);
 	}
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <header th:replace="fragments/head.html :: head"></header>
-  <body>
+  <body style="padding-top: 0;">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
       <div id="mainBody" class="login-content">
         <div id="loginBody">
@@ -9,11 +9,13 @@
             <div>
               <div class="login-flex-header">
                 <h6 class="welcome">WELCOME TO</h6>
-                <img src="/css/dell_vet.png" width="250" />
+                <img src="/images/dell_vet.png" width="250" />
               </div>
               <form data-th-action="@{/login}" method="post">
                 <div class="login-flex-body">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <div
+                    class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                  >
                     <input
                       class="mdl-textfield__input"
                       type="text"
@@ -21,18 +23,26 @@
                       name="username"
                       pattern="[A-Z,a-z, ]*"
                     />
-                    <label class="mdl-textfield__label" for="username">Username</label>
-                    <span class="mdl-textfield__error">Letters and spaces only</span>
+                    <label class="mdl-textfield__label" for="username"
+                      >Username</label
+                    >
+                    <span class="mdl-textfield__error"
+                      >Letters and spaces only</span
+                    >
                   </div>
 
-                  <div class="mb-20 mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <div
+                    class="mb-20 mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                  >
                     <input
                       class="mdl-textfield__input"
                       type="password"
                       id="password"
                       name="password"
                     />
-                    <label class="mdl-textfield__label" for="password">Password</label>
+                    <label class="mdl-textfield__label" for="password"
+                      >Password</label
+                    >
                   </div>
 
                   <button
