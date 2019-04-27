@@ -1,9 +1,10 @@
 package springapp.command;
+
 import springapp.domain.Appointment;
 import springapp.domain.Client;
 
 public class AppointmentCommand {
-	
+
 	private Integer id;
 	private String start;
 	private String end;
@@ -89,23 +90,23 @@ public class AppointmentCommand {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Client getClient() {
 		return client;
 	}
-	
+
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	
+
 	public Integer getClientId() {
 		return clientId;
 	}
-	
+
 	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
 	}
