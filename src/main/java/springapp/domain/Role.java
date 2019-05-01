@@ -2,6 +2,7 @@ package springapp.domain;
 
 import static springapp.domain.Permission.LIST_CLIENTS;
 import static springapp.domain.Permission.LIST_PETS;
+import static springapp.domain.Permission.LIST_APPOINTMENTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public enum Role {
 
 	SUPER_ADMIN(Permission.values()),
-	READ_ONLY(LIST_PETS, LIST_CLIENTS);
+	READ_ONLY(LIST_PETS, LIST_CLIENTS, LIST_APPOINTMENTS);
 	
 	
 	private final Permission[] permissions;

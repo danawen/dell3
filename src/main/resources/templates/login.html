@@ -1,40 +1,116 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u column">
-			<div id="loginBox" >
-				<div class="bordered pure-u column">
-					
-					<div data-th-if="${param.error}" class="message-box-error">
-				        Invalid username and password
-				    </div>
-				    <div data-th-if="${param.logout}" class="message-box-info">
-				        You have been logged out
-				    </div>
-					<form data-th-action="@{/login}" method="post" class="pure-form pure-form-aligned">
-					    
-				       <div class="pure-control-group">
-				            <label for="username">Username</label>
-				            <input id="username" name="username" type="text" placeholder="Username">
-				        </div>
-		
-				        <div class="pure-control-group">
-				            <label for="password">Password</label>
-				            <input id="password" name="password" type="password" placeholder="Password">
-				        </div>
-				        <div class="pure-controls">
-		      	            <button type="submit" class="pure-button pure-button-primary">Sign In</button>
-			        	</div>
-					</form>
-					</div>
-		        </div>
-	        </div>
+  <header th:replace="fragments/head.html :: head"></header>
+  <body style="padding-top: 0;">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+      <div id="mainBody" class="login-content">
+        <div id="loginBody">
+          <div id="loginBox">
+            <div>
+              <div class="login-flex-header">
+                <h6 class="welcome">WELCOME TO</h6>
+                <img src="/images/dell_vet.png" width="250" />
+              </div>
+              <form data-th-action="@{/login}" method="post">
+                <div class="login-flex-body">
+                  <div
+                    class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                  >
+                    <input
+                      class="mdl-textfield__input"
+                      type="text"
+                      id="username"
+                      name="username"
+                      pattern="[A-Z,a-z, ]*"
+                    />
+                    <label class="mdl-textfield__label" for="username"
+                      >Username</label
+                    >
+                    <span class="mdl-textfield__error"
+                      >Letters and spaces only</span
+                    >
+                  </div>
+
+                  <div
+                    class="mb-20 mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
+                  >
+                    <input
+                      class="mdl-textfield__input"
+                      type="password"
+                      id="password"
+                      name="password"
+                    />
+                    <label class="mdl-textfield__label" for="password"
+                      >Password</label
+                    >
+                  </div>
+
+                  <button
+                    id="sign-in-button"
+                    type="submit"
+                    class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</body>
+
+    <div id="snack-error" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    <div id="snack-logout" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    <script>
+      if (window.location.href.indexOf('logout') > -1) {
+        r(function() {
+          'use strict';
+
+          var snackbarLogoutContainer = document.querySelector('#snack-logout');
+
+          snackbarLogoutContainer.style.backgroundColor = 'rgb(66, 184, 221)';
+          snackbarLogoutContainer.style.left = 'calc(100% - 155px)';
+
+          var logoutData = {
+            message: 'You have been logged out',
+            timeout: 9000
+          };
+          snackbarLogoutContainer.MaterialSnackbar.showSnackbar(logoutData);
+        });
+
+        function r(f) {
+          /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f();
+        }
+      }
+    </script>
+    <script>
+      if (window.location.href.indexOf('error') > -1) {
+        r(function() {
+          var snackbarErrorContainer = document.querySelector('#snack-error');
+          var showSnackbarButton = document.querySelector('#sign-in-button');
+
+          snackbarErrorContainer.style.backgroundColor = 'rgb(202, 60, 60)';
+          snackbarErrorContainer.style.left = 'calc(100% - 155px)';
+
+          var errorData = {
+            message: 'Invalid username and/or password',
+            timeout: 5000
+          };
+
+          snackbarErrorContainer.MaterialSnackbar.showSnackbar(errorData);
+        });
+
+        function r(f) {
+          /in/.test(document.readyState) ? setTimeout('r(' + f + ')', 9) : f();
+        }
+      }
+    </script>
+  </body>
 </html>
